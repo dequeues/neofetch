@@ -4057,6 +4057,10 @@ image_backend() {
 print_ascii() {
     if [[ -f "$image_source" && ! "$image_source" =~ (png|jpg|jpeg|jpe|svg|gif) ]]; then
         ascii_data="$(< "$image_source")"
+    elif [[ -d "$image_source" ]]; then
+        files=("$image_source"/*)
+        randfile="${files[RANDOM % ${#files[@]}]}"
+        ascii_data="$(< "$randfile")"
     elif [[ "$image_source" == "ascii" || $image_source == auto ]]; then
         :
     else
